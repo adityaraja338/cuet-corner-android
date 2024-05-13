@@ -1,17 +1,115 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <p class="font-16 font-500 mt-4">Cuet Corner</p>
+  <p class="font-12 mt-1">Welcomes,</p>
+  <p class="font-32 font-600">{{ 'Aditya' }}</p>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div>
+    <p class="mt-5 font-12 font-400">Next Test Details:</p>
+    <p class="mt-1 font-16 font-400">
+      Date: <span class="font-600">{{ '10/05/2024' }} </span>{{'@'}}<span
+        class="font-600"
+      >
+        {{ '7:30 PM' }}</span
+      >
+    </p>
+    <ion-button expand="block" color="primary" class="mt-2">START TEST</ion-button>
+  </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <div class="divider-with-text">
+    <hr>
+    <p class="">Performance</p>
+  </div>
+
+  <ion-card class="ion-activatable ion-padding mt-4">
+    <ion-card-header class="">
+      <ion-card-title>Your Overall Performance</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="6">
+            <div class="d-flex justify-content-center mt-3">
+              <div style="height: 120px; width: 120px">
+                <canvas #overallCanvas></canvas>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" class="px-1">
+            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-correct.svg" alt="-" class="mr-2">Correct: {{'69%'}}</p>
+            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-incorrect.svg" alt="-" class="mr-2">Inorrect: {{'69%'}}</p>
+            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-unattempted.svg" alt="-" class="mr-2">Unattempted: {{'69%'}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+  </ion-card>
+
+  <ion-card class="ion-activatable ion-padding mt-4" (click)="navigateToTab2()">
+    <ion-card-header class="">
+      <ion-card-title>Your Previous Performance</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="ion-no-padding">
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="6">
+            <div class="d-flex justify-content-center mt-3">
+              <div style="height: 120px; width: 120px">
+                <canvas #previousCanvas></canvas>
+              </div>
+            </div>
+          </ion-col>
+          <ion-col size="6" class="px-1">
+            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-correct.svg" alt="-" class="mr-2">Correct: {{'69%'}}</p>
+            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-incorrect.svg" alt="-" class="mr-2">Inorrect: {{'69%'}}</p>
+            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-unattempted.svg" alt="-" class="mr-2">Unattempted: {{'69%'}}</p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+    <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+  </ion-card>
+
+  <div class="divider-with-text">
+    <hr>
+    <p class="">Materials</p>
+  </div>
+
+  <ion-grid class="material-cards">
+    <ion-row class="ion-justify-content-between">
+      <ion-col size="4" class="pr-2">
+        <ion-card class="p-relative">
+          <ion-card-content class="ion-activatable">
+            <p class="font-12">Study Materials</p>
+            <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+          </ion-card-content>
+          <img class="new-page-icon" src="assets/icon/material-div-new-page.svg" alt="">
+        </ion-card>
+      </ion-col>
+      <ion-col size="4" class="px-1">
+        <ion-card class="p-relative">
+          <ion-card-content class="ion-activatable">
+            <p class="font-12">Video Links</p>
+            <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+          </ion-card-content>
+          <img class="new-page-icon" src="assets/icon/material-div-new-page.svg" alt="">
+        </ion-card>
+      </ion-col>
+      <ion-col size="4" class="pl-2">
+        <ion-card class="p-relative">
+          <ion-card-content class="ion-activatable">
+            <p class="font-12">PYQs</p>
+            <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+          </ion-card-content>
+          <img class="new-page-icon" src="assets/icon/material-div-new-page.svg" alt="">
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>

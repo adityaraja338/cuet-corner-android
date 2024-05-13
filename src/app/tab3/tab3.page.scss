@@ -1,0 +1,17 @@
+.avatar-div{
+  height:100%;
+  aspect-ratio: 1;
+  background-color: #763bff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  border-radius: 50%;
+  font-size: 36px;
+}
+
+.credit-text{
+  position: absolute;
+  bottom: 0;
+  margin: 4px auto;
+}

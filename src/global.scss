@@ -34,4 +34,50 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+// @import "@ionic/angular/css/palettes/dark.system.css";
+
+@import "./theme/variables.scss";
+
+@import "./assets/scss/font-face.scss";
+@import "./assets/scss/font-variables.scss";
+@import "./assets/scss/layouting.css";
+
+
+*:not(.fa,.fas){
+  font-family: 'Lexend', sans-serif;
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+}
+
+p{
+  margin-bottom: 0;
+}
+
+.p-relative{
+  position: relative;
+}
+
+.divider-with-text{
+  position: relative;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  p{
+    font-size: 12px;
+    font-weight: 300;
+    position: absolute;
+    top:50%;
+    left:50%;
+    background-color: #f4f2ff;
+    transform: translate(-50%, -50%);
+    padding: 0 12px;
+  }
+}
+
+.custom-ripple {
+  color: #dbd5ff;
+}
