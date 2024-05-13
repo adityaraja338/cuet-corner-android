@@ -42,6 +42,47 @@
 @import "./assets/scss/font-variables.scss";
 @import "./assets/scss/layouting.css";
 
+$primary: #8555FD;
+$secondary: #A18AFF;
+$tertiary: #E4E0FA;
+
+$good: #8555fd;
+$improve: #c1b2ff;
+$bad: #c2bed4;
+
+$white: #fff;
+$dark: #222;
+
+@mixin color-map($name, $value) {
+  .#{$name} {
+    color: $value;
+  }
+
+  .hover-#{$name}:hover {
+    color: $value;
+  }
+
+  .bg-#{$name} {
+    background-color: $value;
+  }
+
+  .bg-hover-#{$name}:hover {
+    background-color: $value;
+  }
+
+  .br-#{$name} {
+    border: 1px solid $value;
+  }
+}
+
+@include color-map("primary", $primary);
+@include color-map("secondary", $secondary);
+@include color-map("tertiary", $tertiary);
+@include color-map("good", $good);
+@include color-map("improve", $improve);
+@include color-map("bad", $bad);
+@include color-map("white", $white);
+@include color-map("dark", $dark);
 
 *:not(.fa,.fas){
   font-family: 'Lexend', sans-serif;
@@ -81,3 +122,7 @@ p{
 .custom-ripple {
   color: #dbd5ff;
 }
+
+.line-height-normal{
+  line-height: normal !important;
+} 

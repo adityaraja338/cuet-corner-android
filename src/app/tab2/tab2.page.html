@@ -1,6 +1,6 @@
-<ion-header [translucent]="true" color="primary">
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="ion-padding-horizontal"> Performances </ion-title>
+    <ion-title class="ion-padding-horizontal font-400"> Your Performances </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,6 +12,8 @@
     *ngFor="let performance of performances; index as i"
     class="ion-activatable"
     [class.mb-2]="i !== (performances.length -1)"
+    [routerLink]="['/', 'tabs', 'performances', performance?.id]" routerLinkActive="router-link-active" 
+    routerDirection="forward"
   >
     <ion-card-content class="ion-padding">
       <p class="ion-text-center font-12 font-400">
@@ -22,6 +24,13 @@
       </p>
       <p class="ion-text-center font-20 font-600">{{ performance?.subject }}</p>
       <p class="font-12 font-400 mt-2">
+        Accuracy:
+        <span class="font-600"
+          >{{ performance?.accuracy | number: '.2-2'
+          }}</span
+        > %
+      </p>
+      <p class="font-12 font-400">
         Total Score:
         <span class="font-600"
           >{{ performance?.score }} / {{ performance?.total }}</span
@@ -30,7 +39,9 @@
       <p class="font-12 font-400">
         Questions Attempted:
         <span class="font-600"
-          >{{ performance?.correct + performance?.incorrect  }} / {{ performance?.correct + performance?.incorrect + performance?.unattempted }}</span
+          >{{ performance?.correct + performance?.incorrect }} / {{
+          performance?.correct + performance?.incorrect +
+          performance?.unattempted }}</span
         >
       </p>
     </ion-card-content>

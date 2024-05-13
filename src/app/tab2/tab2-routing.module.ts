@@ -6,11 +6,18 @@ const routes: Routes = [
   {
     path: '',
     component: Tab2Page,
-  }
+  },
+  {
+    path: ':performanceId',
+    loadChildren: () =>
+      import('./performance/performance.module').then(
+        (m) => m.PerformancePageModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class Tab2PageRoutingModule {}
