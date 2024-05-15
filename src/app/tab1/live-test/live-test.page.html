@@ -1,6 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title class="ion-padding-horizontal">Live Test</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title class="">Live Test</ion-title>
     <ion-buttons slot="end" class="ion-padding-horizontal">
       <ion-button class="submit-btn white font-14 ion-text-capitalize" (click)="presentConfirmation()">
         Submit
@@ -52,6 +55,7 @@
           expand="block"
           (click)="swiper.swiper.slidePrev()"
           class="track-btns"
+          [disabled]="swiper.swiper.activeIndex === 0"
         >
           Previous
         </ion-button>
@@ -61,6 +65,7 @@
           expand="block"
           (click)="swiper.swiper.slideNext()"
           class="track-btns"
+          [disabled]="swiper.swiper.activeIndex === questions.length-1"
         >
           Next
         </ion-button>
@@ -84,10 +89,8 @@
     <hr />
     <p class="">Tracking</p>
   </div>
-
   <ion-grid class="ion-padding-horizontal">
     <ion-row>
-      <ion-col></ion-col>
       <ion-col size="12" class="d-flex ion-justify-content-center">
         <div
           class="track-circles mr-2"
@@ -96,6 +99,12 @@
           [class.marked-review]="markedForReviewIndexes.indexOf(i) !== -1"
           [class.marked]="selectedIndexes.indexOf(i) !== -1"
         >{{ i+1 }}</div>
+      </ion-col>
+      <ion-col size="12" class="font-12 legends mt-4">
+        <div class="d-flex ion-align-items-center"><div class="track-circles mr-2"></div> Unattempted</div>
+        <div class="d-flex ion-align-items-center mt-1"><div class="track-circles marked mr-2"></div> Attempted </div>
+        <div class="d-flex ion-align-items-center mt-1"><div class="track-circles marked-review mr-2"></div> Marked for Review</div>
+        <div class="d-flex ion-align-items-center mt-1"><div class="track-circles marked marked-review mr-2"></div> Attempted & Marked for Review</div>
       </ion-col>
     </ion-row>
   </ion-grid>

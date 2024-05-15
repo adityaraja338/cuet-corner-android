@@ -15,6 +15,10 @@ ion-radio.ios::part(container) {
   border-radius: 50%;
 }
 
+.legends .track-circles{
+  height: 20px !important;
+}
+
 .track-circles{
   height: 30px !important;
   aspect-ratio: 1 !important;
@@ -34,6 +38,6 @@ ion-radio.ios::part(container) {
   }
   &.marked.marked-review{
     background-color: #A18AFFA0;
-    border: 2px solid #A18AFF;
+    border: 3px solid #A18AFF;
   }
 }

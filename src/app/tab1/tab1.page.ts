@@ -7,25 +7,47 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
+import { HttpService } from '../shared/http.service';
+import { IonModal } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
 })
-export class Tab1Page implements AfterViewInit {
+export class Tab1Page implements OnInit, AfterViewInit {
   @ViewChild('overallCanvas')
   private overallCanvas!: ElementRef;
 
   @ViewChild('previousCanvas')
   private previousCanvas!: ElementRef;
 
+  @ViewChild(IonModal) modal!: IonModal;
+
   overallChart: any;
   previousChart: any;
+  nextTest:any = null;
+
+  name: string ='';
 
   constructor(
-    private router:Router
+    private router:Router,
+    private http: HttpService
   ) {}
+
+  // ionViewWillEnter(){
+    
+  // }
+
+  ngOnInit(): void {
+    this.http.getNextTest().subscribe({
+      next: (res:any) => {
+        this.nextTest = res.data;
+      }, error: (err:any)=> {
+
+      }
+    })
+  }
 
   ngAfterViewInit() {
     this.overallChart = new Chart(this.overallCanvas.nativeElement, {
@@ -90,6 +112,18 @@ export class Tab1Page implements AfterViewInit {
   navigateToTab2() {
     // Navigate to the desired tab programmatically
     setTimeout(()=> {this.router.navigateByUrl('/tabs/performances');}, 220);
+  }
+
+  cancel() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss(this.name, 'confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    
   }
 
   handleRefresh(event:any) {
