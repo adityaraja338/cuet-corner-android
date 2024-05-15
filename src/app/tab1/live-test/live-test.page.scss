@@ -1,0 +1,39 @@
+ion-button.track-btns{
+  text-transform: capitalize;
+  // padding: 4px 8px;
+  font-size: 12px;
+  &.mark-for-review-btn{
+    --box-shadow: none;
+  }
+}
+
+ion-radio.ios::part(container) {
+  width: 20px;
+  height: 20px;
+
+  border: 2px solid #ddd;
+  border-radius: 50%;
+}
+
+.track-circles{
+  height: 30px !important;
+  aspect-ratio: 1 !important;
+  background-color: #A18AFF60;
+  border-radius: 50% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  color: #8555FD;
+  &.marked{
+    background-color: #A18AFF;
+  }
+  &.marked-review{
+    background-color: #FFF;
+    border: 2px solid #A18AFF;
+  }
+  &.marked.marked-review{
+    background-color: #A18AFFA0;
+    border: 2px solid #A18AFF;
+  }
+}

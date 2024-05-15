@@ -26,6 +26,15 @@
 /* Set text color of the entire app for iOS only */
 :root.ios {
   --ion-text-color: #222;
+  // ion-header{
+  //   --ion-background: var(--ion-color-primary) !important;
+  // }
+  ion-toolbar{
+    --background: #8555FD;
+    .submit-btn{
+      --color: #FFF !important;
+    }
+  }
 }
 
 /* Set text color of the entire app for Material Design only */
@@ -34,12 +43,16 @@
 }
 
 ion-header{
-  --ion-background-color:var(--ion-color-primary);
+  --ion-background-color: var(--ion-color-primary);
   // --ion-color: #FFF;
   ion-title{
     color: #FFF !important;
     font-size: 16px;
   }
+}
+
+ion-back-button {
+  --color: #FFF; /* Change to your desired color */
 }
 
 ion-col{

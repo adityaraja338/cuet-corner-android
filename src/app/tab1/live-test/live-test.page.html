@@ -1,0 +1,102 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-padding-horizontal">Live Test</ion-title>
+    <ion-buttons slot="end" class="ion-padding-horizontal">
+      <ion-button class="submit-btn white font-14 ion-text-capitalize" (click)="presentConfirmation()">
+        Submit
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="">
+  <p class="ion-padding ion-text-center font-16 font-600">
+    Time Remaining:
+    <countdown
+      #cd
+      [config]="countdownConfig"
+      (event)="countdownEnd($event)"
+    ></countdown>
+  </p>
+  <swiper-container #swiper (swiperslidechange)="onSwiper($event)">
+    <swiper-slide
+      *ngFor="let question of questions; let i = index"
+      class="px-3"
+    >
+      <ion-card class="ion-padding">
+        <ion-card-title>Question {{ i + 1 }}</ion-card-title>
+        <ion-card-content class="ion-no-padding">
+          <pre style="white-space: pre-wrap" class="font-16 font-400 mb-0">
+        {{ '\n'+question.text }}
+      </pre
+          >
+          <ion-radio-group
+            [(ngModel)]="selectedOptions[i]"
+            [allowEmptySelection]="true"
+            (ionChange)="checkChange($event, i)"
+          >
+            <div *ngFor="let option of question.options" class="mb-1">
+              <ion-radio [value]="option" labelPlacement="end"
+                >{{ option }}</ion-radio
+              >
+            </div>
+          </ion-radio-group>
+        </ion-card-content>
+      </ion-card>
+    </swiper-slide>
+  </swiper-container>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-justify-content-between">
+      <ion-col size="4" class="pr-1">
+        <ion-button
+          expand="block"
+          (click)="swiper.swiper.slidePrev()"
+          class="track-btns"
+        >
+          Previous
+        </ion-button>
+      </ion-col>
+      <ion-col size="4" class="pl-1">
+        <ion-button
+          expand="block"
+          (click)="swiper.swiper.slideNext()"
+          class="track-btns"
+        >
+          Next
+        </ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button
+          [color]="'secondary'"
+          [fill]="markedForReviewIndexes.indexOf(swiper.swiper.activeIndex) === -1 ? 'solid' : 'outline'"
+          (click)="markForReview(swiper.swiper.activeIndex)"
+          class="track-btns mark-for-review-btn mt-2"
+          expand="block"
+        >
+          {{ markedForReviewIndexes.indexOf(swiper.swiper.activeIndex) === -1 ?
+          'Mark for review' : 'Marked for review'}}
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="ion-padding-horizontal divider-with-text">
+    <hr />
+    <p class="">Tracking</p>
+  </div>
+
+  <ion-grid class="ion-padding-horizontal">
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="12" class="d-flex ion-justify-content-center">
+        <div
+          class="track-circles mr-2"
+          *ngFor="let question of questions; let i = index"
+          (click)="swiper.swiper.slideTo(i)"
+          [class.marked-review]="markedForReviewIndexes.indexOf(i) !== -1"
+          [class.marked]="selectedIndexes.indexOf(i) !== -1"
+        >{{ i+1 }}</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

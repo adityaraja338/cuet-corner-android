@@ -15,11 +15,18 @@
         {{ '7:30 PM' }}</span
       >
     </p>
-    <ion-button expand="block" color="primary" class="mt-2">START TEST</ion-button>
+    <ion-button
+      expand="block"
+      color="primary"
+      class="mt-2"
+      [routerLink]="['/', 'tabs', 'dashboard', 'live-test', '1']"
+      routerLinkActive="router-link-active"
+      >START TEST</ion-button
+    >
   </div>
 
   <div class="divider-with-text">
-    <hr>
+    <hr />
     <p class="">Performance</p>
   </div>
 
@@ -39,9 +46,27 @@
             </div>
           </ion-col>
           <ion-col size="6" class="px-1">
-            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-correct.svg" alt="-" class="mr-2">Correct: {{'69%'}}</p>
-            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-incorrect.svg" alt="-" class="mr-2">Inorrect: {{'69%'}}</p>
-            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-unattempted.svg" alt="-" class="mr-2">Unattempted: {{'69%'}}</p>
+            <p class="mb-0 font-12 font-500">
+              <img
+                src="assets/icon/doughnut-dot-correct.svg"
+                alt="-"
+                class="mr-2"
+              />Correct: {{'69%'}}
+            </p>
+            <p class="mb-0 font-12 font-500">
+              <img
+                src="assets/icon/doughnut-dot-incorrect.svg"
+                alt="-"
+                class="mr-2"
+              />Inorrect: {{'69%'}}
+            </p>
+            <p class="mb-0 font-12 font-500">
+              <img
+                src="assets/icon/doughnut-dot-unattempted.svg"
+                alt="-"
+                class="mr-2"
+              />Unattempted: {{'69%'}}
+            </p>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -65,9 +90,27 @@
             </div>
           </ion-col>
           <ion-col size="6" class="px-1">
-            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-correct.svg" alt="-" class="mr-2">Correct: {{'69%'}}</p>
-            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-incorrect.svg" alt="-" class="mr-2">Inorrect: {{'69%'}}</p>
-            <p class="mb-0 font-12 font-500"><img src="assets/icon/doughnut-dot-unattempted.svg" alt="-" class="mr-2">Unattempted: {{'69%'}}</p>
+            <p class="mb-0 font-12 font-500">
+              <img
+                src="assets/icon/doughnut-dot-correct.svg"
+                alt="-"
+                class="mr-2"
+              />Correct: {{'69%'}}
+            </p>
+            <p class="mb-0 font-12 font-500">
+              <img
+                src="assets/icon/doughnut-dot-incorrect.svg"
+                alt="-"
+                class="mr-2"
+              />Inorrect: {{'69%'}}
+            </p>
+            <p class="mb-0 font-12 font-500">
+              <img
+                src="assets/icon/doughnut-dot-unattempted.svg"
+                alt="-"
+                class="mr-2"
+              />Unattempted: {{'69%'}}
+            </p>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -76,40 +119,63 @@
   </ion-card>
 
   <div class="divider-with-text">
-    <hr>
+    <hr />
     <p class="">Materials</p>
   </div>
 
   <ion-grid class="material-cards">
     <ion-row class="ion-justify-content-between">
       <ion-col size="4" class="pr-2">
-        <ion-card class="p-relative">
+        <ion-card
+          class="p-relative"
+          [routerLink]="['/', 'tabs', 'dashboard', 'study-materials']"
+          routerLinkActive="router-link-active"
+        >
           <ion-card-content class="ion-activatable">
             <p class="font-12">Study Materials</p>
             <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
           </ion-card-content>
-          <img class="new-page-icon" src="assets/icon/material-div-new-page.svg" alt="">
+          <img
+            class="new-page-icon"
+            src="assets/icon/material-div-new-page.svg"
+            alt=""
+          />
         </ion-card>
       </ion-col>
       <ion-col size="4" class="px-1">
-        <ion-card class="p-relative">
+        <ion-card
+          class="p-relative"
+          [routerLink]="['/', 'tabs', 'dashboard', 'video-links']"
+          routerLinkActive="router-link-active"
+        >
           <ion-card-content class="ion-activatable">
             <p class="font-12">Video Links</p>
             <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
           </ion-card-content>
-          <img class="new-page-icon" src="assets/icon/material-div-new-page.svg" alt="">
+          <img
+            class="new-page-icon"
+            src="assets/icon/material-div-new-page.svg"
+            alt=""
+          />
         </ion-card>
       </ion-col>
       <ion-col size="4" class="pl-2">
-        <ion-card class="p-relative">
+        <ion-card
+          class="p-relative"
+          [routerLink]="['/', 'tabs', 'dashboard', 'pyqs']"
+          routerLinkActive="router-link-active"
+        >
           <ion-card-content class="ion-activatable">
             <p class="font-12">PYQs</p>
             <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
           </ion-card-content>
-          <img class="new-page-icon" src="assets/icon/material-div-new-page.svg" alt="">
+          <img
+            class="new-page-icon"
+            src="assets/icon/material-div-new-page.svg"
+            alt=""
+          />
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-
 </ion-content>

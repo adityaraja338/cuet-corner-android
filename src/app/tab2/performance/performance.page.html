@@ -9,10 +9,15 @@
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-card class="ion-padding">
-    <ion-card-title class="ion-text-center font-600"> Graph </ion-card-title>
+    <!-- <ion-card-title slot="bottom" class="ion-text-center font-600"> Graph </ion-card-title> -->
     <ion-card-content class="ion-no-padding dark">
       <ion-grid>
         <ion-row class="ion-align-items-center">
+          <ion-col size="12">
+            <p class="ion-text-center font-16 font-400">
+              Grade: <span class="font-700 primary">B</span>
+            </p>
+          </ion-col>
           <ion-col size="6">
             <div class="d-flex justify-content-center">
               <div style="height: 120px; width: 120px">
@@ -53,22 +58,25 @@
   </div>
   <ion-card class="ion-padding">
     <ion-card-content class="ion-no-padding dark">
-      <p class="text-center primary font-12 font-400 line-height-normal"> Total Score: </p>
+      <p class="text-center secondary font-12 font-400 line-height-normal">
+        Total Score:
+      </p>
       <p class="text-center dark font-20 font-700">{{ 48 }} / {{ 60 }}</p>
       <p class="font-12 font-400 mt-4">
-        Total No. of Questions: <span class="font-600 primary">{{ 6 }}</span>
+        Total No. of Questions: <span class="font-600 secondary">{{ 6 }}</span>
       </p>
       <p class="font-12 font-400">
-        Total questions attempted: <span class="font-600 primary">{{ 6 }}</span>
+        Total questions attempted: <span class="font-600 secondary">{{ 6 }}</span>
       </p>
       <p class="font-12 font-400">
-        Total correct answers: <span class="font-600 primary">{{ 6 }}</span>
+        Total correct answers: <span class="font-600 secondary">{{ 6 }}</span>
       </p>
       <p class="font-12 font-400">
-        Total incorrect answers: <span class="font-600 primary">{{ 6 }}</span>
+        Total incorrect answers: <span class="font-600 secondary">{{ 6 }}</span>
       </p>
       <p class="font-12 font-400">
-        Total unattempted questions: <span class="font-600 primary">{{ 6 }}</span>
+        Total unattempted questions:
+        <span class="font-600 secondary">{{ 6 }}</span>
       </p>
       <p class="font-16 font-400 mt-4">
         Accuracy: <span class="font-700 primary">{{ 76.2 }} %</span>
@@ -89,16 +97,16 @@
     </ion-card-title> -->
     <ion-card-content class="ion-no-padding dark">
       <p class="font-12 font-400">
-        Test Date: <span class="font-600 primary">{{ '23/05/2024' }}</span>
+        Test Date: <span class="font-600 secondary">{{ '23/05/2024' }}</span>
       </p>
       <p class="font-12 font-400">
-        Test Subject: <span class="font-600 primary">{{ 'Testing' }}</span>
+        Test Subject: <span class="font-600 secondary">{{ 'Testing' }}</span>
       </p>
       <p class="font-12 font-400">
-        Start Time: <span class="font-600 primary">{{ '07:30 PM' }}</span>
+        Start Time: <span class="font-600 secondary">{{ '07:30 PM' }}</span>
       </p>
       <p class="font-12 font-400">
-        End Time: <span class="font-600 primary">{{ '8:21 PM' }}</span>
+        End Time: <span class="font-600 secondary">{{ '8:21 PM' }}</span>
       </p>
     </ion-card-content>
   </ion-card>

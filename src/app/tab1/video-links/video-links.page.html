@@ -1,0 +1,28 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Video Links</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col
+        *ngFor="let video of videos; index as i"
+        size="6"
+        [class]="i%2===1 ? 'pl-1' : 'pr-1'"
+        class="mb-2"
+      >
+        <ion-card [href]="video?.url" class="ion-padding ion-activatable">
+          <ion-card-content class="ion-no-padding">
+            <p class="font-12 gont-500">{{ video?.name }}</p>
+          </ion-card-content>
+          <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

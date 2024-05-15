@@ -55,23 +55,23 @@ $dark: #222;
 
 @mixin color-map($name, $value) {
   .#{$name} {
-    color: $value;
+    color: $value !important;
   }
 
   .hover-#{$name}:hover {
-    color: $value;
+    color: $value !important;
   }
 
   .bg-#{$name} {
-    background-color: $value;
+    background-color: $value !important;
   }
 
   .bg-hover-#{$name}:hover {
-    background-color: $value;
+    background-color: $value !important;
   }
 
   .br-#{$name} {
-    border: 1px solid $value;
+    border: 1px solid $value !important;
   }
 }
 
@@ -103,13 +103,17 @@ p{
   position: relative;
 }
 
+.alert-wrapper{
+  border-radius: 12px !important;
+}
+
 .divider-with-text{
   position: relative;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   p{
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     position: absolute;
     top:50%;
     left:50%;
