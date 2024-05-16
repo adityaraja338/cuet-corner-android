@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
-import { HttpService } from '../shared/http.service';
+import { HttpService } from '../shared/services/http.service';
 import { IonModal } from '@ionic/angular';
 
 @Component({
@@ -26,27 +26,23 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   overallChart: any;
   previousChart: any;
-  nextTest:any = null;
+  nextTest: any = null;
 
-  name: string ='';
+  name: string = '';
 
-  constructor(
-    private router:Router,
-    private http: HttpService
-  ) {}
+  constructor(private router: Router, private http: HttpService) {}
 
   // ionViewWillEnter(){
-    
+
   // }
 
   ngOnInit(): void {
     this.http.getNextTest().subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         this.nextTest = res.data;
-      }, error: (err:any)=> {
-
-      }
-    })
+      },
+      error: (err: any) => {},
+    });
   }
 
   ngAfterViewInit() {
@@ -57,11 +53,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
         datasets: [
           {
             data: [50, 29, 15],
-            backgroundColor: [
-              '#8555FD',
-              '#C1B2FF',
-              '#E4E0FA',
-            ],
+            backgroundColor: ['#8555FD', '#C1B2FF', '#E4E0FA'],
             // hoverBackgroundColor: [
             //   '#FFCE56',
             //   '#FF6384',
@@ -76,9 +68,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
         radius: 58,
         plugins: {
           legend: {
-            display: false
-          }
-        }
+            display: false,
+          },
+        },
       },
     });
     this.previousChart = new Chart(this.previousCanvas.nativeElement, {
@@ -88,11 +80,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
         datasets: [
           {
             data: [69, 29, 15],
-            backgroundColor: [
-              '#8555FD',
-              '#C1B2FF',
-              '#E4E0FA',
-            ],
+            backgroundColor: ['#8555FD', '#C1B2FF', '#E4E0FA'],
             borderJoinStyle: 'round',
           },
         ],
@@ -102,16 +90,18 @@ export class Tab1Page implements OnInit, AfterViewInit {
         radius: 58,
         plugins: {
           legend: {
-            display: false
-          }
-        }
+            display: false,
+          },
+        },
       },
     });
   }
 
   navigateToTab2() {
     // Navigate to the desired tab programmatically
-    setTimeout(()=> {this.router.navigateByUrl('/tabs/performances');}, 220);
+    setTimeout(() => {
+      this.router.navigateByUrl('/tabs/performances');
+    }, 220);
   }
 
   cancel() {
@@ -122,11 +112,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.modal.dismiss(this.name, 'confirm');
   }
 
-  onWillDismiss(event: Event) {
-    
-  }
+  onWillDismiss(event: Event) {}
 
-  handleRefresh(event:any) {
+  handleRefresh(event: any) {
     setTimeout(() => {
       // Any calls to load data go here
       event.target.complete();
