@@ -35,6 +35,13 @@
       --color: #FFF !important;
     }
   }
+
+  .signup-form{
+    ion-input{
+      // color:#c5c4c7 !important;
+      --background: var(--ion-background-color, #fff);
+    }
+  }
 }
 
 /* Set text color of the entire app for Material Design only */
@@ -49,6 +56,10 @@ ion-header{
     color: #FFF !important;
     font-size: 16px;
   }
+}
+
+ion-content {
+  --keyboard-offset: 0px; /* Add any necessary offset here */
 }
 
 ion-back-button {
@@ -68,7 +79,12 @@ ion-input{
     background-color: #FFF;
     opacity: 1 !important;
   }
-  color:#c5c4c7 !important;
+  &.has-focus{
+    --border-color: #8555FD !important;
+  }
+  background-color: #FFF;
+    opacity: 1 !important;
+  // color:#c5c4c7;
 }
 
 ion-button{

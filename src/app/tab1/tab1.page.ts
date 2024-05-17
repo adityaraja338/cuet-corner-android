@@ -26,30 +26,26 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   overallChart: any;
   previousChart: any;
+
   nextTest: any = null;
+  overallPerformance:any;
+  previousPerformance:any;
 
   name: string = '';
 
   constructor(private router: Router, private http: HttpService) {}
 
-  // ionViewWillEnter(){
-
-  // }
-
   ngOnInit(): void {
-    this.http.getNextTest().subscribe({
-      next: (res: any) => {
-        this.nextTest = res.data;
-      },
-      error: (err: any) => {},
-    });
+    this.getNextTest();
+    this.getOverallPerformance();
+    this.getPreviousPerformance();
   }
 
   ngAfterViewInit() {
     this.overallChart = new Chart(this.overallCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['BJP', 'Congress', 'AAP', 'CPM', 'SP'],
+        labels: ['Correct', 'Incorrect', 'Unattempted'],
         datasets: [
           {
             data: [50, 29, 15],
@@ -76,7 +72,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.previousChart = new Chart(this.previousCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['BJP', 'Congress', 'AAP', 'CPM', 'SP'],
+        labels: ['Correct', 'Incorrect', 'Unattempted'],
         datasets: [
           {
             data: [69, 29, 15],
@@ -97,12 +93,73 @@ export class Tab1Page implements OnInit, AfterViewInit {
     });
   }
 
-  navigateToTab2() {
+  ionViewWillEnter(){
+    this.getNextTest();
+  }
+
+  getNextTest(){
+    this.http.getNextTest().subscribe({
+      next: (res: any) => {
+        this.nextTest = res.data;
+      },
+      error: (err: any) => {},
+    });
+  }
+
+  getOverallPerformance(){
+    this.http.getOverallPerformance().subscribe({
+      next: (res:any) => {
+        // console.log(res.data);
+        this.overallPerformance = res.data;
+
+        this.overallChart.data.datasets[0].data = [
+          this.overallPerformance.correct,
+          this.overallPerformance.incorrect,
+          this.overallPerformance.unattempted,
+        ];
+
+        this.overallChart.update();
+      }, error: (err:any) => {
+
+      }
+    })
+  }
+
+  getPreviousPerformance(){
+    this.http.getPreviousPerformance().subscribe({
+      next: (res:any) => {
+        // console.log(res.data);
+        this.previousPerformance = res.data;
+
+        this.previousChart.data.datasets[0].data = [
+          this.previousPerformance.correct,
+          this.previousPerformance.incorrect,
+          this.previousPerformance.unattempted,
+        ];
+
+        this.previousChart.update();
+      }, error: (err:any) => {
+
+      }
+    })
+  }
+
+  navigateToTab2(event:any, testId:number) {
     // Navigate to the desired tab programmatically
     setTimeout(() => {
-      this.router.navigateByUrl('/tabs/performances');
+      if (!event.target.closest('.chart-div')){
+        this.router.navigateByUrl('/tabs/performances/'+ testId);
+      }
     }, 220);
   }
+
+  // onRowClick(event: any, studentSelected: any) {
+  //   const student = studentSelected;
+  //   if (!event.target.closest('.menu-button-container')) {
+  //     this.router.navigateByUrl('admin/students/' + student.id);
+  //   }
+  //   this.currentStudent = student;
+  // }
 
   cancel() {
     this.modal.dismiss(null, 'cancel');
@@ -111,8 +168,6 @@ export class Tab1Page implements OnInit, AfterViewInit {
   confirm() {
     this.modal.dismiss(this.name, 'confirm');
   }
-
-  onWillDismiss(event: Event) {}
 
   handleRefresh(event: any) {
     setTimeout(() => {

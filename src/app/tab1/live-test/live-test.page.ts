@@ -1,14 +1,11 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CountdownComponent, CountdownEvent } from 'ngx-countdown';
+import { HttpService } from 'src/app/shared/services/http.service';
 import { register } from 'swiper/element/bundle';
 
 register();
-
-interface Question {
-  text: string;
-  options: string[];
-}
 
 @Component({
   selector: 'app-live-test',
@@ -20,61 +17,103 @@ export class LiveTestPage implements OnInit {
     | CountdownComponent
     | undefined;
 
-  // @ViewChild('swiper')
-  // swiperRef: ElementRef | undefined;
-
-  // @ViewChild(IonSlides) slides: IonSlides;
-
   testing: boolean = false;
   countdownConfig: any = { leftTime: 30 };
 
-  questions: Question[] = [
-    {
-      text: 'What is the length of a running train crossing another 180-meter long train running in the opposite direction?',
-      options: ['Option A', 'Option B', 'Option C', 'Option D'], // Add options for each question
-    },
-    {
-      text: 'What is the length of a running train crossing another 180-meter long train running in the opposite direction?',
-      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'], // Add options for each question
-    },
-    {
-      text: 'What is the length of a running train crossing another 180-meter long train running in the opposite direction?',
-      options: ['Option A', 'Option B', 'Option C', 'Option D'], // Add options for each question
-    },
-    {
-      text: 'What is the length of a running train crossing another 180-meter long train running in the opposite direction?',
-      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'], // Add options for each question
-    },
-    // Add more questions as needed
-  ];
+  questions: any = [];
 
   currentQuestion: any;
-  selectedOptions: any[] = new Array(this.questions.length);
+  selectedOptions: any;
   selectedIndexes: number[] = [];
   markedForReviewIndexes: number[] = [];
 
-  constructor(private alertController: AlertController) {}
+  constructor(
+    private alertController: AlertController,
+    private http: HttpService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.currentQuestion = this.questions[0];
+    this.postStartTest();
+  }
+
+  postStartTest(){
+    const testId = this.route.snapshot.params['testId'];
+    this.http.postStartTest(testId).subscribe({
+      next: (res:any) => {
+        this.countdownConfig = { leftTime: res.data.timeLeft };
+        this.countdown?.restart();
+        this.getQuestions();
+      }, error: (error:any) => {
+        if(error.status === 401){
+
+        }
+        this.router.navigateByUrl('/tabs/dashboard');
+      }
+    })
+  }
+
+  getQuestions() {
+    this.http.getQuestions(50).subscribe({
+      next: (res: any) => {
+        // console.log(res.data);
+        this.questions = res.data;
+        this.selectedOptions = new Array(this.questions.length);
+
+        // for(let question of this.questions){
+        //   if(question.submitted)
+        // }
+        for (const [index, value] of this.questions.entries()) {
+          // console.log(index, value);
+          if(value.submittedAnswer){
+            this.selectedOptions[index] = value.submittedAnswer;
+            this.selectedIndexes.push(index);
+            // console.log(this.selectedOptions);
+          }
+        }
+      },
+    });
+  }
+
+  postSubmitAnswer(questionId:number, value:string) {
+    const testId = this.route.snapshot.params['testId'];
+
+    const data:any = {};
+    data['testId']=testId;
+    data['value']=value;
+
+    this.http.postSubmitAnswer(data, questionId).subscribe({
+      next: (res: any) => {
+        console.log(res.data);
+      },
+    });
+  }
+
+  postSubmitTest(){
+    const testId = this.route.snapshot.params['testId'];
+    this.http.postSubmitTest(testId).subscribe({
+      next: (res:any) => {
+        this.router.navigateByUrl('/tabs/dashboard');
+      }
+    })
   }
 
   // Function to handle option selection
   checkChange(option: any, questionIndex: number) {
-    // Reset selected option for other questions
-    // for (let i = 0; i < this.selectedOptions.length; i++) {
-    //   if (i !== questionIndex) {
-    //     this.selectedOptions[i] = undefined;
-    //   }
-    // }
-    // console.log(option);
     console.log('Selected options list: ', this.selectedOptions);
     // console.log('Selected option for question', questionIndex + 1, ':', option);
-    if(option.detail.value === undefined){
-      this.selectedIndexes.splice(this.selectedIndexes.indexOf(questionIndex), 1);
+    if (option.detail.value === undefined) {
+      this.selectedIndexes.splice(
+        this.selectedIndexes.indexOf(questionIndex),
+        1
+      );
     } else {
       this.selectedIndexes.push(questionIndex);
     }
+    this.postSubmitAnswer(this.questions[questionIndex]?.id, option.detail.value);
+    // console.log(this.questions[questionIndex]);
   }
 
   countdownEnd(e: CountdownEvent) {
@@ -90,9 +129,12 @@ export class LiveTestPage implements OnInit {
     console.log('index:', activeIndex);
   }
 
-  markForReview(index:number){
-    if(this.markedForReviewIndexes.indexOf(index) !== -1){
-      this.markedForReviewIndexes.splice(this.markedForReviewIndexes.indexOf(index), 1);
+  markForReview(index: number) {
+    if (this.markedForReviewIndexes.indexOf(index) !== -1) {
+      this.markedForReviewIndexes.splice(
+        this.markedForReviewIndexes.indexOf(index),
+        1
+      );
     } else {
       this.markedForReviewIndexes.push(index);
     }
@@ -109,18 +151,20 @@ export class LiveTestPage implements OnInit {
           cssClass: 'primary',
           handler: () => {
             console.log('Confirmation cancelled');
-          }
-        }, {
+          },
+        },
+        {
           text: 'Yes',
           cssClass: 'secondary',
           handler: () => {
             console.log('Confirmed');
+            this.postSubmitTest();
             // Perform action here upon confirmation
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
-  
+
     await alert.present();
   }
 }

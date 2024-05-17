@@ -52,6 +52,7 @@ $bad: #c2bed4;
 
 $white: #fff;
 $dark: #222;
+$grey: #666666;
 
 @mixin color-map($name, $value) {
   .#{$name} {
@@ -83,6 +84,7 @@ $dark: #222;
 @include color-map("bad", $bad);
 @include color-map("white", $white);
 @include color-map("dark", $dark);
+@include color-map("grey", $grey);
 
 *:not(.fa,.fas){
   font-family: 'Lexend', sans-serif;
@@ -130,3 +132,7 @@ p{
 .line-height-normal{
   line-height: normal !important;
 } 
+
+.underline{
+  text-decoration: underline;
+}

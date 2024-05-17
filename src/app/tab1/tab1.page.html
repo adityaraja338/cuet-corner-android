@@ -4,18 +4,21 @@
   </ion-refresher>
   <p class="font-16 font-500 mt-4">Cuet Corner</p>
   <p class="font-12 mt-1">Welcomes,</p>
-  <p class="font-32 font-600">{{ 'Aditya' }}</p>
+  <p class="font-32 font-600 ion-text-capitalize">
+    {{ overallPerformance?.studentName?.toString().split(' ')[0] }}
+  </p>
 
   <div>
     <p class="mt-5 font-12 font-400">Next Test Details:</p>
     <p class="mt-1 font-16 font-400">
       Date:
-      <span class="font-600">{{ (nextTest | date: 'dd/MM/yyyy') || '-' }} </span
+      <span class="font-600"
+        >{{ (nextTest?.startTime | date: 'dd/MM/yyyy') || '-' }} </span
       >{{'@'}}<span class="font-600">
-        {{ (nextTest | date: 'hh:mm a') || '-' }}</span
+        {{ (nextTest?.startTime | date: 'hh:mm a') || '-' }}</span
       >
     </p>
-    <ion-button expand="block" color="primary" class="mt-2" id="open-modal"
+    <ion-button expand="block" color="primary" class="mt-2" id="open-modal" [disabled]="!nextTest?.startTime"
       >START TEST</ion-button
     >
   </div>
@@ -34,42 +37,56 @@
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="6">
-            <div class="d-flex justify-content-center mt-3">
+            <div
+              class="chart-div d-flex justify-content-center mt-3 p-relative"
+            >
               <div style="height: 120px; width: 120px">
                 <canvas #overallCanvas></canvas>
+              </div>
+              <div class="chart-center">
+                {{ overallPerformance?.grade || '-' }}
               </div>
             </div>
           </ion-col>
           <ion-col size="6" class="px-1">
-            <p class="mb-0 font-12 font-500">
+            <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-correct.svg"
                 alt="-"
                 class="mr-2"
-              />Correct: {{'69%'}}
+              />Correct: {{ ((overallPerformance?.correct /
+              (overallPerformance?.correct + overallPerformance?.incorrect +
+              overallPerformance?.unattempted )) * 100) | number: '.2-2' }} %
             </p>
-            <p class="mb-0 font-12 font-500">
+            <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-incorrect.svg"
                 alt="-"
                 class="mr-2"
-              />Inorrect: {{'69%'}}
+              />Inorrect: {{ ((overallPerformance?.incorrect /
+              (overallPerformance?.correct + overallPerformance?.incorrect +
+              overallPerformance?.unattempted )) * 100) | number: '.2-2' }} %
             </p>
-            <p class="mb-0 font-12 font-500">
+            <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-unattempted.svg"
                 alt="-"
                 class="mr-2"
-              />Unattempted: {{'69%'}}
+              />Unattempted: {{ ((overallPerformance?.unattempted /
+              (overallPerformance?.correct + overallPerformance?.incorrect +
+              overallPerformance?.unattempted )) * 100) | number: '.2-2' }} %
             </p>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
-    <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+    <!-- <ion-ripple-effect class="custom-ripple"></ion-ripple-effect> -->
   </ion-card>
 
-  <ion-card class="ion-activatable ion-padding mt-4" (click)="navigateToTab2()">
+  <ion-card
+    class="ion-activatable ion-padding mt-4"
+    (click)="navigateToTab2($event, previousPerformance?.testId)"
+  >
     <ion-card-header class="">
       <ion-card-title>Your Previous Performance</ion-card-title>
     </ion-card-header>
@@ -78,33 +95,44 @@
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="6">
-            <div class="d-flex justify-content-center mt-3">
+            <div
+              class="chart-div d-flex justify-content-center mt-3 p-relative"
+            >
               <div style="height: 120px; width: 120px">
                 <canvas #previousCanvas></canvas>
+              </div>
+              <div class="chart-center">
+                {{ previousPerformance?.grade || '-' }}
               </div>
             </div>
           </ion-col>
           <ion-col size="6" class="px-1">
-            <p class="mb-0 font-12 font-500">
+            <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-correct.svg"
                 alt="-"
                 class="mr-2"
-              />Correct: {{'69%'}}
+              />Correct: {{ ((previousPerformance?.correct /
+              (previousPerformance?.correct + previousPerformance?.incorrect +
+              previousPerformance?.unattempted )) * 100) | number: '.2-2' }} %
             </p>
-            <p class="mb-0 font-12 font-500">
+            <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-incorrect.svg"
                 alt="-"
                 class="mr-2"
-              />Inorrect: {{'69%'}}
+              />Inorrect: {{ ((previousPerformance?.incorrect /
+              (previousPerformance?.correct + previousPerformance?.incorrect +
+              previousPerformance?.unattempted )) * 100) | number: '.2-2' }} %
             </p>
-            <p class="mb-0 font-12 font-500">
+            <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-unattempted.svg"
                 alt="-"
                 class="mr-2"
-              />Unattempted: {{'69%'}}
+              />Unattempted: {{ ((previousPerformance?.unattempted /
+              (previousPerformance?.correct + previousPerformance?.incorrect +
+              previousPerformance?.unattempted )) * 100) | number: '.2-2' }} %
             </p>
           </ion-col>
         </ion-row>
@@ -200,12 +228,12 @@
                   <p
                     class="ion-text-center line-height-normal dark font-14 font-600 mb-0"
                   >
-                    {{ '18/05/2024' }}
+                    {{ nextTest?.startTime | date: 'dd/MM/yyyy' }}
                   </p>
                   <p
                     class="ion-text-center line-height-normal dark font-14 font-600"
                   >
-                    {{ '7:30 PM' }}
+                    {{ nextTest?.startTime | date: 'hh:mm a' }}
                   </p>
                 </ion-col>
                 <ion-col size="6">
@@ -215,12 +243,12 @@
                   <p
                     class="ion-text-center line-height-normal dark font-14 font-600 mb-0"
                   >
-                    {{ '18/05/2024' }}
+                    {{ nextTest?.endTime | date: 'dd/MM/yyyy' }}
                   </p>
                   <p
                     class="ion-text-center line-height-normal dark font-14 font-600"
                   >
-                    {{ '7:30 PM' }}
+                    {{ nextTest?.endTime | date: 'hh:mm a' }}
                   </p>
                 </ion-col>
                 <ion-col size="12" class="mt-2">
@@ -230,7 +258,7 @@
                   <p
                     class="ion-text-center line-height-normal dark font-14 font-600 mb-0"
                   >
-                    60 min
+                    {{ nextTest?.timeAllotted }} min
                   </p>
                 </ion-col>
                 <ion-col size="12" class="mt-2">
@@ -240,7 +268,7 @@
                   <p
                     class="ion-text-center line-height-normal dark font-14 font-600 mb-0"
                   >
-                    General Test, Mughal, Revolt
+                    {{ nextTest?.topics }}
                   </p>
                 </ion-col>
               </ion-row>
@@ -253,7 +281,7 @@
               class="ion-padding-horizontal ion-text-center d-flex flex-column align-items-center font-12 font-400 dark"
             >
               <li>
-                {{ nextTest?.timeAllotted || "60" }} minutes to complete the
+                {{ nextTest?.timeAllotted || "-" }} minutes to complete the
                 test.
               </li>
               <li>
@@ -265,10 +293,17 @@
             <ion-button
               expand="block"
               (click)="modal.dismiss()"
-              [routerLink]="['/', 'tabs', 'dashboard', 'live-test', '1']"
+              [routerLink]="['/', 'tabs', 'dashboard', 'live-test', nextTest?.testId]"
               routerDirection="forward"
+              [disabled]="nextTest?.completed"
               >Start Test</ion-button
             >
+            <p
+              *ngIf="nextTest?.completed"
+              class="font-10 ion-text-center primary mt-1"
+            >
+              Test has already been submitted!
+            </p>
           </ion-card-content>
         </ion-card>
       </ion-content>

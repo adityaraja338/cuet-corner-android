@@ -15,7 +15,10 @@
         <ion-row class="ion-align-items-center">
           <ion-col size="12">
             <p class="ion-text-center font-16 font-400">
-              Grade: <span class="font-700 primary">B</span>
+              Grade:
+              <span class="font-700 primary"
+                >{{ performanceData?.grade || '-'}}</span
+              >
             </p>
           </ion-col>
           <ion-col size="6">
@@ -26,26 +29,32 @@
             </div>
           </ion-col>
           <ion-col size="6" class="px-1">
-            <p class="mb-0 font-12 font-400">
+            <p class="mb-0 font-10 font-400">
               <img
                 src="assets/icon/doughnut-dot-correct.svg"
                 alt="-"
                 class="mr-2"
-              />Correct: {{'69%'}}
+              />Correct: {{ ((performanceData?.correct /
+              (performanceData?.correct + performanceData?.incorrect +
+              performanceData?.unattempted))*100) | number: '.2-2' }} %
             </p>
-            <p class="mb-0 font-12 font-400">
+            <p class="mb-0 font-10 font-400">
               <img
                 src="assets/icon/doughnut-dot-incorrect.svg"
                 alt="-"
                 class="mr-2"
-              />Inorrect: {{'69%'}}
+              />Inorrect: {{ ((performanceData?.incorrect /
+              (performanceData?.correct + performanceData?.incorrect +
+              performanceData?.unattempted))*100) | number: '.2-2' }} %
             </p>
-            <p class="mb-0 font-12 font-400">
+            <p class="mb-0 font-10 font-400">
               <img
                 src="assets/icon/doughnut-dot-unattempted.svg"
                 alt="-"
                 class="mr-2"
-              />Unattempted: {{'69%'}}
+              />Unattempted: {{ ((performanceData?.unattempted /
+              (performanceData?.correct + performanceData?.incorrect +
+              performanceData?.unattempted))*100) | number: '.2-2' }} %
             </p>
           </ion-col>
         </ion-row>
@@ -61,29 +70,47 @@
       <p class="text-center secondary font-12 font-400 line-height-normal">
         Total Score:
       </p>
-      <p class="text-center dark font-20 font-700">{{ 48 }} / {{ 60 }}</p>
+      <p class="text-center dark font-20 font-700">
+        {{ performanceData?.totalScoreObtained }} / {{
+        performanceData?.totalScore }}
+      </p>
       <p class="font-12 font-400 mt-4">
-        Total No. of Questions: <span class="font-600 secondary">{{ 6 }}</span>
+        Total No. of Questions:
+        <span class="font-600 secondary"
+          >{{ (performanceData?.correct + performanceData?.incorrect +
+          performanceData?.unattempted) }}</span
+        >
       </p>
       <p class="font-12 font-400">
-        Total questions attempted: <span class="font-600 secondary">{{ 6 }}</span>
+        Total questions attempted:
+        <span class="font-600 secondary"
+          >{{ (performanceData?.correct + performanceData?.incorrect) }}</span
+        >
       </p>
       <p class="font-12 font-400">
-        Total correct answers: <span class="font-600 secondary">{{ 6 }}</span>
+        Total correct answers:
+        <span class="font-600 secondary">{{ performanceData?.correct }}</span>
       </p>
       <p class="font-12 font-400">
-        Total incorrect answers: <span class="font-600 secondary">{{ 6 }}</span>
+        Total incorrect answers:
+        <span class="font-600 secondary">{{ performanceData?.incorrect }}</span>
       </p>
       <p class="font-12 font-400">
         Total unattempted questions:
-        <span class="font-600 secondary">{{ 6 }}</span>
+        <span class="font-600 secondary"
+          >{{ performanceData?.unattempted }}</span
+        >
       </p>
       <p class="font-16 font-400 mt-4">
-        Accuracy: <span class="font-700 primary">{{ 76.2 }} %</span>
+        Accuracy:
+        <span class="font-700 primary"
+          >{{ ((performanceData?.totalScoreObtained /
+          performanceData?.totalScore) * 100) | number: '.2-2' }} %</span
+        >
       </p>
       <p class="font-12 font-600 mt-4 primary">Remark:</p>
       <p class="font-16 font-500 line-height-normal dark">
-        {{ 'Early stages, pick up the pace, you can do better.' }}
+        {{ performanceData?.remark || '-' }}
       </p>
     </ion-card-content>
   </ion-card>
@@ -97,16 +124,16 @@
     </ion-card-title> -->
     <ion-card-content class="ion-no-padding dark">
       <p class="font-12 font-400">
-        Test Date: <span class="font-600 secondary">{{ '23/05/2024' }}</span>
+        Test Date: <span class="font-600 secondary">{{ (testData?.startTime | date: 'dd/MM/yyyy') || '-' }}</span>
       </p>
       <p class="font-12 font-400">
-        Test Subject: <span class="font-600 secondary">{{ 'Testing' }}</span>
+        Test Subject: <span class="font-600 secondary ion-text-capitalize">{{ testData?.subject || '-' }}</span>
       </p>
       <p class="font-12 font-400">
-        Start Time: <span class="font-600 secondary">{{ '07:30 PM' }}</span>
+        Start Time: <span class="font-600 secondary">{{ (testData?.startTime | date: 'hh:mm a':'UTC') || '-' }}</span>
       </p>
       <p class="font-12 font-400">
-        End Time: <span class="font-600 secondary">{{ '8:21 PM' }}</span>
+        End Time: <span class="font-600 secondary">{{ (testData?.endTime | date: 'hh:mm a':'UTC') || '-' }}</span>
       </p>
     </ion-card-content>
   </ion-card>

@@ -30,7 +30,7 @@
         <ion-card-title>Question {{ i + 1 }}</ion-card-title>
         <ion-card-content class="ion-no-padding">
           <pre style="white-space: pre-wrap" class="font-16 font-400 mb-0">
-        {{ '\n'+question.text }}
+        {{ '\n'+question.question }}
       </pre
           >
           <ion-radio-group
@@ -46,54 +46,54 @@
           </ion-radio-group>
         </ion-card-content>
       </ion-card>
+      <ion-grid class="ion-padding-top">
+        <ion-row class="ion-justify-content-between">
+          <ion-col size="4" class="pr-1">
+            <ion-button
+              expand="block"
+              (click)="swiper.swiper.slidePrev()"
+              class="track-btns"
+              [disabled]="swiper.swiper.activeIndex === 0"
+            >
+              Previous
+            </ion-button>
+          </ion-col>
+          <ion-col size="4" class="pl-1">
+            <ion-button
+              expand="block"
+              (click)="swiper.swiper.slideNext()"
+              class="track-btns"
+              [disabled]="swiper.swiper.activeIndex === questions.length-1"
+            >
+              Next
+            </ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button
+              [color]="'secondary'"
+              [fill]="markedForReviewIndexes.indexOf(swiper.swiper.activeIndex) === -1 ? 'solid' : 'outline'"
+              (click)="markForReview(swiper.swiper.activeIndex)"
+              class="track-btns mark-for-review-btn mt-2"
+              expand="block"
+            >
+              {{ markedForReviewIndexes.indexOf(swiper.swiper.activeIndex) === -1 ?
+              'Mark for review' : 'Marked for review'}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </swiper-slide>
   </swiper-container>
-  <ion-grid class="ion-padding">
-    <ion-row class="ion-justify-content-between">
-      <ion-col size="4" class="pr-1">
-        <ion-button
-          expand="block"
-          (click)="swiper.swiper.slidePrev()"
-          class="track-btns"
-          [disabled]="swiper.swiper.activeIndex === 0"
-        >
-          Previous
-        </ion-button>
-      </ion-col>
-      <ion-col size="4" class="pl-1">
-        <ion-button
-          expand="block"
-          (click)="swiper.swiper.slideNext()"
-          class="track-btns"
-          [disabled]="swiper.swiper.activeIndex === questions.length-1"
-        >
-          Next
-        </ion-button>
-      </ion-col>
-      <ion-col size="12">
-        <ion-button
-          [color]="'secondary'"
-          [fill]="markedForReviewIndexes.indexOf(swiper.swiper.activeIndex) === -1 ? 'solid' : 'outline'"
-          (click)="markForReview(swiper.swiper.activeIndex)"
-          class="track-btns mark-for-review-btn mt-2"
-          expand="block"
-        >
-          {{ markedForReviewIndexes.indexOf(swiper.swiper.activeIndex) === -1 ?
-          'Mark for review' : 'Marked for review'}}
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 
   <div class="ion-padding-horizontal divider-with-text">
     <hr />
     <p class="">Tracking</p>
   </div>
-  <ion-grid class="ion-padding-horizontal">
+  <ion-grid class="ion-padding">
     <ion-row>
-      <ion-col size="12" class="d-flex ion-justify-content-center">
+      <ion-col size="12" style="flex-wrap: wrap;" class="d-flex ion-justify-content-center">
         <div
-          class="track-circles mr-2"
+          class="track-circles mr-2 mb-2"
           *ngFor="let question of questions; let i = index"
           (click)="swiper.swiper.slideTo(i)"
           [class.marked-review]="markedForReviewIndexes.indexOf(i) !== -1"

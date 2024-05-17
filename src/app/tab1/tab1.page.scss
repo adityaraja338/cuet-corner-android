@@ -2,6 +2,22 @@ ion-card{
   border-radius: 12px;
 }
 
+.chart-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #8555FD22;
+  height: 32px;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+}
+
 .new-page-icon{
   height: 16px;
   position: absolute;

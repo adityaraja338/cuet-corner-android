@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true">
+  <div class="curved-background-container">
+    <div class="curved-background">
+      <div class="curved-white-circle"></div>
+      <div class="curved-white-bar"></div>
+      <div class="curved-purple-circle"></div>
+    </div>
+  </div>
+  <div
+    class="content-container h-100 d-flex ion-align-items-center ion-justify-content-center ion-padding"
+  >
+    <div style="width: 100%">
+      <p class="text-center font-24 font-500">Cuet Corner</p>
+      <p class="text-center font-14 font-500">Welcomes You</p>
+      <p class="mt-4 font-10 font-600 grey">Email</p>
+      <ion-input
+        class="ion-padding-horizontal"
+        color="primary"
+        fill="outline"
+        [(ngModel)]="email"
+        type="email"
+      ></ion-input>
+      <p class="mt-2 font-10 font-600 grey">Password</p>
+      <ion-input
+        class="ion-padding-horizontal"
+        color="primary"
+        fill="outline"
+        [(ngModel)]="password"
+        [type]="showPassword ? 'text' : 'password'"
+      ></ion-input>
+      <ion-checkbox class="font-12 font-500 grey mt-1" labelPlacement="end" [(ngModel)]="showPassword" >Show Password</ion-checkbox>
+      <div class="text-center mt-4">
+        <ion-button class="w-50">LOGIN</ion-button>
+      </div>
+      <p class="ion-text-center font-12 font-500 mt-4">Haven't Registered Yet? <span class="underline" routerLink="/signup">Signup Here!</span></p>
+    </div>
+  </div>
+</ion-content>

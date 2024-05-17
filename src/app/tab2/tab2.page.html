@@ -12,14 +12,14 @@
     *ngFor="let performance of performances; index as i"
     class="ion-activatable"
     [class.mb-2]="i !== (performances.length -1)"
-    [routerLink]="['/', 'tabs', 'performances', performance?.id]" routerLinkActive="router-link-active" 
+    [routerLink]="['/', 'tabs', 'performances', performance?.testId]" routerLinkActive="router-link-active" 
     routerDirection="forward"
   >
     <ion-card-content class="ion-padding">
       <p class="ion-text-center font-12 font-400">
         Date:
         <span class="font-600"
-          >{{ performance?.startTime | date: 'dd/MM/yyyy' }}</span
+          >{{ performance?.date | date: 'dd/MM/yyyy' }}</span
         >
       </p>
       <p class="ion-text-center font-20 font-600 primary">{{ performance?.subject }}</p>
@@ -33,7 +33,7 @@
       <p class="font-12 font-400">
         Total Score:
         <span class="font-600 dark"
-          >{{ performance?.score }} / {{ performance?.total }}</span
+          >{{ performance?.totalScoreObtained }} / {{ performance?.totalScore }}</span
         >
       </p>
       <p class="font-12 font-400">

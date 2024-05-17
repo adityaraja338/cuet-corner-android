@@ -8,7 +8,7 @@ const routes: Routes = [
     component: Tab2Page,
   },
   {
-    path: ':performanceId',
+    path: ':testId',
     loadChildren: () =>
       import('./performance/performance.module').then(
         (m) => m.PerformancePageModule

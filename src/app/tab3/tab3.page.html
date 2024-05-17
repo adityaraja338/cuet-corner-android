@@ -3,44 +3,69 @@
     <ion-grid class="ion-padding p-relative">
       <ion-row class="mt-5">
         <ion-col size="4" offset-xs="4">
-          <div class="ion-activatable avatar-div">
-            A
+          <div class="ion-activatable ion-text-capitalize avatar-div">
+            {{studentDetails?.studentName[0] || '-'}}
             <ion-ripple-effect></ion-ripple-effect>
           </div>
         </ion-col>
         <ion-col size="12" class="ion-margin-top">
           <div class="ion-text-center">
-            <p class="name font-36 font-400">Aditya Raj Aryan</p>
+            <p class="name font-36 font-400">
+              {{ studentDetails?.studentName || '-' }}
+            </p>
           </div>
         </ion-col>
         <ion-col size="12" class="mt-1">
           <div class="ion-text-center">
-            <p class="student-id font-12 font-500">Student ID: 1</p>
+            <p class="student-id font-12 font-500">
+              Student ID: {{studentDetails?.studentId || '-' }}
+            </p>
           </div>
         </ion-col>
         <ion-col size="12" class="mt-4">
           <p class="font-12 font-500 pl-1">Batch ID</p>
-          <ion-input fill="outline" value="1024" disabled></ion-input>
+          <ion-input
+            fill="outline"
+            [value]="studentDetails?.batchId ? studentDetails?.batchId : '-'"
+            disabled
+            class="ion-padding-horizontal"
+          ></ion-input>
         </ion-col>
         <ion-col size="12" class="mt-1">
           <p class="font-12 font-500 pl-1">Phone</p>
-          <ion-input fill="outline" value="+91 9304608421" disabled></ion-input>
+          <ion-input
+            fill="outline"
+            [value]="studentDetails?.phone ? studentDetails?.phone : '-'"
+            disabled
+            class="ion-padding-horizontal"
+          ></ion-input>
         </ion-col>
         <ion-col size="12" class="mt-1">
           <p class="font-12 font-500 pl-1">Email</p>
           <ion-input
             fill="outline"
-            value="abc@example.com"
+            [value]="studentDetails?.email ? studentDetails?.email : '-'"
             disabled
+            class="ion-padding-horizontal"
           ></ion-input>
         </ion-col>
         <ion-col size="12" class="mt-1">
           <p class="font-12 font-500 pl-1">Age</p>
-          <ion-input fill="outline" value="19" disabled></ion-input>
+          <ion-input
+            fill="outline"
+            [value]="studentDetails?.age ? studentDetails?.age : '-'"
+            disabled
+            class="ion-padding-horizontal"
+          ></ion-input>
         </ion-col>
         <ion-col size="12" class="mt-1">
           <p class="font-12 font-500 pl-1">CUET Attempts</p>
-          <ion-input fill="outline" value="2021, 2024" disabled></ion-input>
+          <ion-input
+            fill="outline"
+            [value]="studentDetails?.cuetAttempts?.join(', ')"
+            disabled
+            class="ion-padding-horizontal"
+          ></ion-input>
         </ion-col>
         <!-- <ion-col size="12" class="mt-1 ion-align-self-end">
           <p class="ion-text-center font-10">Made by Aditya</p>

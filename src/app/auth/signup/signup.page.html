@@ -1,0 +1,105 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="curved-background-container">
+    <div class="curved-background">
+      <div class="curved-white-circle"></div>
+      <div class="curved-white-bar"></div>
+      <div class="curved-purple-circle"></div>
+    </div>
+  </div>
+
+  <ion-grid class="signup-form content-container h-100">
+    <ion-row class="h-100 ion-align-items-center ion-justify-content-center">
+      <ion-col size="12">
+        <p class="text-center font-24 font-400 white">
+          Cuet Corner
+        </p>
+        <p class="text-center font-14 font-300 white">Welcomes You</p>
+      </ion-col>
+      <ion-col size="12">
+        <ion-card class="mt-4">
+          <ion-card-content>
+            <form [formGroup]="signupForm">
+              <p class="font-10 font-600 grey">Name</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="name"
+              ></ion-input>
+              <p class="mt-2 font-10 font-600 grey">Email</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="email"
+                type="email"
+              ></ion-input>
+    
+              <p class="mt-2 font-10 font-600 grey">Phone</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="phone"
+                value="+91"
+              ></ion-input>
+              <p class="mt-2 font-10 font-600 grey">Password</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="password"
+              ></ion-input>
+              <p class="mt-2 font-10 font-600 grey">Confirm Password</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="confirmPassword"
+              ></ion-input>
+              <p class="mt-2 font-10 font-600 grey">Age</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="age"
+              ></ion-input>
+              <p class="mt-2 font-10 font-600 grey">Cuet Attempts</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="cuetAttempts"
+              ></ion-input>
+              <p class="mt-2 font-10 font-600 grey">Batch ID</p>
+              <ion-input
+                class="ion-padding-horizontal"
+                color="primary"
+                fill="outline"
+                formControlName="batchId"
+              ></ion-input>
+            </form>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="12" class="ion-padding-bottom">
+        <div>
+          <div class="text-center mt-4">
+            <ion-button class="w-50">SIGNUP</ion-button>
+          </div>
+          <p class="ion-text-center font-12 font-500 mt-4">
+            Already have an account?
+            <span class="underline" routerLink="/login" routerDirection="back">Login Here!</span>
+          </p>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <div
+    class="content-container d-flex flex-column ion-align-items-center ion-justify-content-center"
+  >
+    <div></div>
+    
+    
+  </div> -->
+</ion-content>
