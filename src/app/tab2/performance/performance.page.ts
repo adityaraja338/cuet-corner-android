@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Chart from 'chart.js/auto';
+import { AddToastService } from 'src/app/shared/services/add-toast.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 
 @Component({
@@ -23,7 +24,11 @@ export class PerformancePage implements OnInit, AfterViewInit {
   performanceData: any;
   testData: any;
 
-  constructor(private http: HttpService, private route: ActivatedRoute) {}
+  constructor(
+    private http: HttpService, 
+    private route: ActivatedRoute,
+    private toast: AddToastService
+  ) {}
 
   ngOnInit() {
     this.getTestPerformance();
@@ -75,7 +80,17 @@ export class PerformancePage implements OnInit, AfterViewInit {
         // this.performanceChart.update();
       },
       error: (err: any) => {
-        console.log(err);
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.getTestPerformance();
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
+        }
       },
     });
   }

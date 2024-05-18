@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HttpService } from '../shared/services/http.service';
+import { AddToastService } from '../shared/services/add-toast.service';
 
 @Component({
   selector: 'app-tab2',
@@ -11,7 +12,8 @@ export class Tab2Page implements OnInit {
   performances: any[] = [];
 
   constructor(
-    private http:HttpService
+    private http:HttpService,
+    private toast: AddToastService
   ) {}
 
   ngOnInit(): void {
@@ -24,8 +26,18 @@ export class Tab2Page implements OnInit {
         // console.log(res.data);
         this.performances = res.data;
       }, error: (err: any) => {
-        console.log(err);
-      }
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.getAllPerformances();
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
+        }
+      },
     })
   }
 

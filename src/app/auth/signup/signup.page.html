@@ -9,23 +9,34 @@
 
   <ion-grid class="signup-form content-container h-100">
     <ion-row class="h-100 ion-align-items-center ion-justify-content-center">
-      <ion-col size="12">
-        <p class="text-center font-24 font-400 white">
-          Cuet Corner
-        </p>
-        <p class="text-center font-14 font-300 white">Welcomes You</p>
+      <ion-col class="ion-align-self-start">
+        <p class="text-center font-24 font-400 white">Cuet Corner</p>
+        <p class="text-center font-14 font-300 white">Welcomes You!</p>
       </ion-col>
-      <ion-col size="12">
+      <ion-col size="12" class="ion-align-self-center">
         <ion-card class="mt-4">
           <ion-card-content>
-            <form [formGroup]="signupForm">
-              <p class="font-10 font-600 grey">Name</p>
+            <p class="ion-text-center font-20 font-600 primary">SIGNUP</p>
+            <form [formGroup]="signupForm" (ngSubmit)="signup()">
+              <p class="mt-4 font-10 font-600 grey">Name</p>
               <ion-input
                 class="ion-padding-horizontal"
                 color="primary"
                 fill="outline"
                 formControlName="name"
+                placeholder="Arjun Mitra"
+                (keydown.enter)="signup()"
               ></ion-input>
+              <p
+                *ngIf="
+                  signupForm.get('name')?.invalid &&
+                  (signupForm.get('name')?.dirty || 
+                  signupForm.get('name')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Please enter a valid name
+              </p>
               <p class="mt-2 font-10 font-600 grey">Email</p>
               <ion-input
                 class="ion-padding-horizontal"
@@ -33,43 +44,133 @@
                 fill="outline"
                 formControlName="email"
                 type="email"
+                placeholder="abc@example.com"
+                (keydown.enter)="signup()"
               ></ion-input>
-    
+              <p
+                *ngIf="signupForm.get('email')?.invalid &&
+                  (signupForm.get('email')?.dirty || 
+                  signupForm.get('email')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Please enter a valid email
+              </p>
               <p class="mt-2 font-10 font-600 grey">Phone</p>
-              <ion-input
-                class="ion-padding-horizontal"
-                color="primary"
-                fill="outline"
-                formControlName="phone"
-                value="+91"
-              ></ion-input>
+              <ion-row class="ion-justify-content-between">
+                <ion-col size="3">
+                  <ion-input
+                    class="ion-padding-horizontal"
+                    color="primary"
+                    fill="outline"
+                    formControlName="countryCode"
+                    placeholder="Country Code"
+                    (keydown.enter)="signup()"
+                  ></ion-input>
+                </ion-col>
+                <ion-col size="8">
+                  <ion-input
+                    class="ion-padding-horizontal"
+                    color="primary"
+                    fill="outline"
+                    formControlName="phone"
+                    placeholder="Phone Number"
+                    (keydown.enter)="signup()"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <p
+                *ngIf="
+                  signupForm.get('countryCode')?.invalid &&
+                  (signupForm.get('countryCode')?.dirty ||
+                  signupForm.get('countryCode')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Please enter a valid country code
+              </p>
+              <p
+                *ngIf="
+                  signupForm.get('phone')?.invalid &&
+                  (signupForm.get('phone')?.dirty || 
+                  signupForm.get('phone')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Please enter a valid phone number
+              </p>
               <p class="mt-2 font-10 font-600 grey">Password</p>
               <ion-input
                 class="ion-padding-horizontal"
                 color="primary"
                 fill="outline"
                 formControlName="password"
+                type="password"
+                placeholder="Password"
+                (keydown.enter)="signup()"
               ></ion-input>
+              <p
+                *ngIf="signupForm.get('password')?.invalid &&
+                  (signupForm.get('password')?.dirty || 
+                  signupForm.get('password')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Password must be at least 8 characters long. <br />
+                Include at least one uppercase letter <br />
+                Include at least one lowercase letter <br />
+                Include at least one numeric character <br />
+                Include at least one special character ({{'@'}}, $, !, %, *, ?, &)
+                <br />
+                E.g., {{'Xayd12@K#'}} (Using this is not recommended)
+              </p>
               <p class="mt-2 font-10 font-600 grey">Confirm Password</p>
               <ion-input
                 class="ion-padding-horizontal"
                 color="primary"
                 fill="outline"
                 formControlName="confirmPassword"
+                placeholder="Confirm Password"
+                (keydown.enter)="signup()"
               ></ion-input>
+              <p
+                *ngIf="
+                  signupForm.get('password')?.value !=
+                  signupForm.get('confirmPassword')?.value &&
+                  (signupForm.get('confirmPassword')?.dirty ||
+                  signupForm.get('confirmPassword')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Passwords do not match
+              </p>
               <p class="mt-2 font-10 font-600 grey">Age</p>
               <ion-input
                 class="ion-padding-horizontal"
                 color="primary"
                 fill="outline"
                 formControlName="age"
+                placeholder="19"
+                (keydown.enter)="signup()"
               ></ion-input>
-              <p class="mt-2 font-10 font-600 grey">Cuet Attempts</p>
+              <p
+                *ngIf="
+                  signupForm.get('age')?.invalid &&
+                  (signupForm.get('age')?.dirty || 
+                  signupForm.get('age')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Please enter a valid age
+              </p>
+              <p class="mt-2 font-10 font-600 grey"> Cuet Attempts (Leave empty if none) </p>
               <ion-input
                 class="ion-padding-horizontal"
                 color="primary"
                 fill="outline"
                 formControlName="cuetAttempts"
+                placeholder="2024, 2023"
+                (keydown.enter)="signup()"
               ></ion-input>
               <p class="mt-2 font-10 font-600 grey">Batch ID</p>
               <ion-input
@@ -77,29 +178,79 @@
                 color="primary"
                 fill="outline"
                 formControlName="batchId"
+                placeholder="1029"
+                (keydown.enter)="signup()"
               ></ion-input>
+              <p
+                *ngIf="
+                  signupForm.get('batchId')?.invalid &&
+                  (signupForm.get('batchId')?.dirty || 
+                  signupForm.get('batchId')?.touched)
+                "
+                class="font-10 font-500 pl-2 mt-1 primary"
+              >
+                Please enter a valid batch id
+              </p>
             </form>
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <ion-col size="12" class="ion-padding-bottom">
-        <div>
-          <div class="text-center mt-4">
-            <ion-button class="w-50">SIGNUP</ion-button>
-          </div>
-          <p class="ion-text-center font-12 font-500 mt-4">
-            Already have an account?
-            <span class="underline" routerLink="/login" routerDirection="back">Login Here!</span>
-          </p>
+      <ion-col class="ion-padding-bottom ion-align-self-end">
+        <div class="text-center mt-4">
+          <ion-button class="w-50" type="submit" (click)="signup()"
+            >SIGNUP</ion-button
+          >
         </div>
+        <p class="ion-text-center font-12 font-500 mt-3">
+          Already have an account?
+          <span class="underline" routerLink="/login" routerDirection="back"
+            >Login Here!</span
+          >
+        </p>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <!-- <div
-    class="content-container d-flex flex-column ion-align-items-center ion-justify-content-center"
-  >
-    <div></div>
-    
-    
-  </div> -->
+  <ion-modal #modal [canDismiss]="true">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title class="ion-padding-horizontal">Save Token</ion-title>
+          <!-- <ion-buttons slot="end" class="ion-padding-horizontal white">
+            <ion-button (click)="modal.dismiss()" class="font-14"
+              >Close</ion-button
+            >
+          </ion-buttons> -->
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-card class="ion-padding">
+          <ion-card-content class="ion-no-padding">
+            <h4 class="font-28 font-600 text-center mb-5">
+              Warning: Important Information!
+            </h4>
+            <p class="text-center font-16 font-500">
+              Please save the following token securely:
+            </p>
+            <p
+              class="my-1 primary text-center font-md-48 font-xs-32 font-700 reset-token"
+            >
+              {{ currentToken || "-" }}
+            </p>
+            <p class="text-center font-16 font-500">
+              This token is crucial for resetting your password if you forget it
+              in the future.
+            </p>
+            <div class="row mx-0 justify-content-center mt-4 pt-3">
+              <ion-button
+                class="font-16 font-500 py-2 px-4 white cursor-pointer"
+                (click)="presentConfirmation()"
+              >
+                CONTINUE
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

@@ -1,3 +1,4 @@
+import { AddToastService } from './../shared/services/add-toast.service';
 import {
   AfterViewInit,
   Component,
@@ -28,12 +29,16 @@ export class Tab1Page implements OnInit, AfterViewInit {
   previousChart: any;
 
   nextTest: any = null;
-  overallPerformance:any;
-  previousPerformance:any;
+  overallPerformance: any;
+  previousPerformance: any;
 
   name: string = '';
 
-  constructor(private router: Router, private http: HttpService) {}
+  constructor(
+    private router: Router,
+    private http: HttpService,
+    private toast: AddToastService
+  ) {}
 
   ngOnInit(): void {
     this.getNextTest();
@@ -48,7 +53,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
         labels: ['Correct', 'Incorrect', 'Unattempted'],
         datasets: [
           {
-            data: [50, 29, 15],
+            data: [0.001, 0.001, 0.001],
             backgroundColor: ['#8555FD', '#C1B2FF', '#E4E0FA'],
             // hoverBackgroundColor: [
             //   '#FFCE56',
@@ -75,7 +80,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
         labels: ['Correct', 'Incorrect', 'Unattempted'],
         datasets: [
           {
-            data: [69, 29, 15],
+            data: [0.001, 0.001, 0.001],
             backgroundColor: ['#8555FD', '#C1B2FF', '#E4E0FA'],
             borderJoinStyle: 'round',
           },
@@ -93,85 +98,98 @@ export class Tab1Page implements OnInit, AfterViewInit {
     });
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.getNextTest();
   }
 
-  getNextTest(){
+  getNextTest() {
     this.http.getNextTest().subscribe({
       next: (res: any) => {
         this.nextTest = res.data;
+      },
+      error: (err: any) => {
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.getNextTest();
+            this.getOverallPerformance();
+            this.getPreviousPerformance();
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
+        }
+      },
+    });
+  }
+
+  getOverallPerformance() {
+    this.http.getOverallPerformance().subscribe({
+      next: (res: any) => {
+        // console.log(res.data);
+        this.overallPerformance = res.data;
+
+        if (
+          !(
+            this.overallPerformance.correct === 0 &&
+            this.overallPerformance.incorrect === 0 &&
+            this.overallPerformance.unattempted === 0
+          )
+        ) {
+          this.overallChart.data.datasets[0].data = [
+            this.overallPerformance.correct,
+            this.overallPerformance.incorrect,
+            this.overallPerformance.unattempted,
+          ];
+        }
+        this.overallChart.update();
       },
       error: (err: any) => {},
     });
   }
 
-  getOverallPerformance(){
-    this.http.getOverallPerformance().subscribe({
-      next: (res:any) => {
-        // console.log(res.data);
-        this.overallPerformance = res.data;
-
-        this.overallChart.data.datasets[0].data = [
-          this.overallPerformance.correct,
-          this.overallPerformance.incorrect,
-          this.overallPerformance.unattempted,
-        ];
-
-        this.overallChart.update();
-      }, error: (err:any) => {
-
-      }
-    })
-  }
-
-  getPreviousPerformance(){
+  getPreviousPerformance() {
     this.http.getPreviousPerformance().subscribe({
-      next: (res:any) => {
+      next: (res: any) => {
         // console.log(res.data);
         this.previousPerformance = res.data;
 
-        this.previousChart.data.datasets[0].data = [
-          this.previousPerformance.correct,
-          this.previousPerformance.incorrect,
-          this.previousPerformance.unattempted,
-        ];
-
+        if (
+          !(
+            this.overallPerformance?.correct == 0 &&
+            this.overallPerformance?.incorrect == 0 &&
+            this.overallPerformance?.unattempted == 0
+          )
+        ) {
+          this.previousChart.data.datasets[0].data = [
+            this.previousPerformance?.correct,
+            this.previousPerformance?.incorrect,
+            this.previousPerformance?.unattempted,
+          ];
+        }
         this.previousChart.update();
-      }, error: (err:any) => {
-
-      }
-    })
+      },
+      error: (err: any) => {},
+    });
   }
 
-  navigateToTab2(event:any, testId:number) {
+  navigateToTab2(event: any, testId: number) {
     // Navigate to the desired tab programmatically
     setTimeout(() => {
-      if (!event.target.closest('.chart-div')){
-        this.router.navigateByUrl('/tabs/performances/'+ testId);
+      if (!event.target.closest('.chart-div') && testId) {
+        this.router.navigateByUrl('/tabs/performances/' + testId);
       }
     }, 220);
-  }
-
-  // onRowClick(event: any, studentSelected: any) {
-  //   const student = studentSelected;
-  //   if (!event.target.closest('.menu-button-container')) {
-  //     this.router.navigateByUrl('admin/students/' + student.id);
-  //   }
-  //   this.currentStudent = student;
-  // }
-
-  cancel() {
-    this.modal.dismiss(null, 'cancel');
-  }
-
-  confirm() {
-    this.modal.dismiss(this.name, 'confirm');
   }
 
   handleRefresh(event: any) {
     setTimeout(() => {
       // Any calls to load data go here
+      this.getNextTest();
+      this.getOverallPerformance();
+      this.getPreviousPerformance();
       event.target.complete();
     }, 2000);
   }

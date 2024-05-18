@@ -18,7 +18,12 @@
         {{ (nextTest?.startTime | date: 'hh:mm a') || '-' }}</span
       >
     </p>
-    <ion-button expand="block" color="primary" class="mt-2" id="open-modal" [disabled]="!nextTest?.startTime"
+    <ion-button
+      expand="block"
+      color="primary"
+      class="mt-2"
+      id="open-modal"
+      [disabled]="!nextTest?.startTime"
       >START TEST</ion-button
     >
   </div>
@@ -54,27 +59,30 @@
                 src="assets/icon/doughnut-dot-correct.svg"
                 alt="-"
                 class="mr-2"
-              />Correct: {{ ((overallPerformance?.correct /
+              />Correct: {{ (((overallPerformance?.correct /
               (overallPerformance?.correct + overallPerformance?.incorrect +
-              overallPerformance?.unattempted )) * 100) | number: '.2-2' }} %
+              overallPerformance?.unattempted )) * 100) | number: '.2-2')|| 0 }}
+              %
             </p>
             <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-incorrect.svg"
                 alt="-"
                 class="mr-2"
-              />Inorrect: {{ ((overallPerformance?.incorrect /
+              />Inorrect: {{ (((overallPerformance?.incorrect /
               (overallPerformance?.correct + overallPerformance?.incorrect +
-              overallPerformance?.unattempted )) * 100) | number: '.2-2' }} %
+              overallPerformance?.unattempted )) * 100) | number: '.2-2') || 0
+              }} %
             </p>
             <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-unattempted.svg"
                 alt="-"
                 class="mr-2"
-              />Unattempted: {{ ((overallPerformance?.unattempted /
+              />Unattempted: {{ (((overallPerformance?.unattempted /
               (overallPerformance?.correct + overallPerformance?.incorrect +
-              overallPerformance?.unattempted )) * 100) | number: '.2-2' }} %
+              overallPerformance?.unattempted )) * 100) | number: '.2-2')|| 0 }}
+              %
             </p>
           </ion-col>
         </ion-row>
@@ -112,33 +120,33 @@
                 src="assets/icon/doughnut-dot-correct.svg"
                 alt="-"
                 class="mr-2"
-              />Correct: {{ ((previousPerformance?.correct /
+              />Correct: {{ (((previousPerformance?.correct /
               (previousPerformance?.correct + previousPerformance?.incorrect +
-              previousPerformance?.unattempted )) * 100) | number: '.2-2' }} %
+              previousPerformance?.unattempted )) * 100) | number: '.2-2') || 0  }} %
             </p>
             <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-incorrect.svg"
                 alt="-"
                 class="mr-2"
-              />Inorrect: {{ ((previousPerformance?.incorrect /
+              />Inorrect: {{ (((previousPerformance?.incorrect /
               (previousPerformance?.correct + previousPerformance?.incorrect +
-              previousPerformance?.unattempted )) * 100) | number: '.2-2' }} %
+              previousPerformance?.unattempted )) * 100) | number: '.2-2') || 0  }} %
             </p>
             <p class="mb-0 font-10 font-500">
               <img
                 src="assets/icon/doughnut-dot-unattempted.svg"
                 alt="-"
                 class="mr-2"
-              />Unattempted: {{ ((previousPerformance?.unattempted /
+              />Unattempted: {{ (((previousPerformance?.unattempted /
               (previousPerformance?.correct + previousPerformance?.incorrect +
-              previousPerformance?.unattempted )) * 100) | number: '.2-2' }} %
+              previousPerformance?.unattempted )) * 100) | number: '.2-2') || 0 }} %
             </p>
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>
-    <ion-ripple-effect class="custom-ripple"></ion-ripple-effect>
+    <ion-ripple-effect *ngIf="previousPerformance?.testId" class="custom-ripple"></ion-ripple-effect>
   </ion-card>
 
   <div class="divider-with-text">

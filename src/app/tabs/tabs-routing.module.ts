@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { authGuard } from '../shared/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -24,12 +25,17 @@ const routes: Routes = [
         redirectTo: '/tabs/dashboard',
         pathMatch: 'full'
       }
-    ]
+    ],
+    canActivate: [authGuard]
   },
   {
     path: '',
     redirectTo: '/tabs/dashboard',
     pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: '/login'
   }
 ];
 

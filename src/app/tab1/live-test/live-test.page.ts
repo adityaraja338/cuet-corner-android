@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { CountdownComponent, CountdownEvent } from 'ngx-countdown';
+import { AddToastService } from 'src/app/shared/services/add-toast.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 import { register } from 'swiper/element/bundle';
 
@@ -31,7 +32,8 @@ export class LiveTestPage implements OnInit {
     private alertController: AlertController,
     private http: HttpService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toast: AddToastService,
   ) {}
 
   ngOnInit(): void {
@@ -46,17 +48,26 @@ export class LiveTestPage implements OnInit {
         this.countdownConfig = { leftTime: res.data.timeLeft };
         this.countdown?.restart();
         this.getQuestions();
-      }, error: (error:any) => {
-        if(error.status === 401){
-
+      }, 
+      error: (err: any) => {
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.postStartTest();
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
         }
-        this.router.navigateByUrl('/tabs/dashboard');
-      }
+      },
     })
   }
 
   getQuestions() {
-    this.http.getQuestions(50).subscribe({
+    const testId = this.route.snapshot.params['testId'];
+    this.http.getQuestions(testId).subscribe({
       next: (res: any) => {
         // console.log(res.data);
         this.questions = res.data;
@@ -74,6 +85,19 @@ export class LiveTestPage implements OnInit {
           }
         }
       },
+      error: (err: any) => {
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.getQuestions();
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
+        }
+      },
     });
   }
 
@@ -87,6 +111,18 @@ export class LiveTestPage implements OnInit {
     this.http.postSubmitAnswer(data, questionId).subscribe({
       next: (res: any) => {
         console.log(res.data);
+      }, error: (err: any) => {
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.postSubmitAnswer(questionId, value);
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
+        }
       },
     });
   }
@@ -95,8 +131,22 @@ export class LiveTestPage implements OnInit {
     const testId = this.route.snapshot.params['testId'];
     this.http.postSubmitTest(testId).subscribe({
       next: (res:any) => {
+        this.toast.presentToast("Test submitted successfully!");
         this.router.navigateByUrl('/tabs/dashboard');
-      }
+      },
+      error: (err: any) => {
+        if (err.status == 401) {
+          // console.log(refreshToken);
+          return this.http.refreshToken(()=>{
+            this.postSubmitTest();
+          });
+        } else {
+          // console.log(error);
+          return this.toast.presentToast(
+            err.error.message || 'Oops! Something went wrong!'
+          );
+        }
+      },
     })
   }
 

@@ -72,12 +72,13 @@ ion-col{
 
 ion-input{
   --border-radius: 10px !important;
-  border-radius: 10px !important;
+  border-radius: 10px;
   min-height: 42px !important;
   font-size: 12px !important;
   &:has(input:disabled){
     background-color: #FFF;
     opacity: 1 !important;
+    color: #AAAAAA;
   }
   &.has-focus{
     --border-color: #8555FD !important;
@@ -85,6 +86,12 @@ ion-input{
   background-color: #FFF;
     opacity: 1 !important;
   // color:#c5c4c7;
+  label{
+    margin-bottom: 0 !important;
+  }
+  &.ion-invalid{
+    --border-color: #A18AFF !important;
+  }
 }
 
 ion-button{

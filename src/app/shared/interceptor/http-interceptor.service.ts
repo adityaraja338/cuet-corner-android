@@ -6,7 +6,8 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, from, switchMap } from 'rxjs';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -23,20 +24,25 @@ export class HttpInterceptorService {
     if (
       request.url.includes('/auth') ||
       request.url.includes('/student/create') ||
-      request.url.includes('/reset-password')
+      request.url.includes('/reset-password') ||
+      request.url.includes('/refresh-token') 
     ) {
       return next.handle(request); // Don't intercept login request
     }
 
-    request = request.clone({
-      withCredentials: true,
-      setHeaders: {
-        // Authorization: `Bearer ${localStorage.getItem('cuet_access_token')}`,
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdHVkZW50SWQiOjEsInN0dWRlbnROYW1lIjoiQWRpdHlhIiwiYmF0Y2hJZCI6MSwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTcxNTc3NDg1NywiZXhwIjoxNzE2NjM4ODU3fQ.Kdml06d4JgLO7ZdFjsq_ZEFbqyaSSQI20tSAImGFpNU`,
-      },
-    });
-    return next.handle(request);
+    return from(this.storage.get('cuet_access_token')).pipe(
+      switchMap((token) => {
+        if (token) {
+          request = request.clone({
+            setHeaders: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        }
+        return next.handle(request);
+      })
+    );
   }
 
-  constructor() {}
+  constructor(private storage: Storage) {}
 }

@@ -22,7 +22,6 @@
   bottom:50%;
   z-index: 3;
 }
-
 .curved-purple-circle {
   position: absolute;
   bottom: 50%; /* Adjust this value to control the curve */
@@ -55,6 +54,11 @@
 
 ion-checkbox{
   --border-radius: 36% !important;
+}
 
+@media (min-width: 0px) and (-webkit-min-device-pixel-ratio: 1) and (orientation: portrait) and (platform: ios) {
+  ion-input{
+    color: #8555FD;
+  }
 }
 
