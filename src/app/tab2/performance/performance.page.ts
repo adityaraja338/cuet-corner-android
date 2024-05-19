@@ -38,7 +38,7 @@ export class PerformancePage implements OnInit, AfterViewInit {
     this.performanceChart = new Chart(this.performanceCanvas.nativeElement, {
       type: 'doughnut',
       data: {
-        labels: ['Correct', 'Incorrect', 'Unattempteds',],
+        labels: ['Correct', 'Incorrect', 'Unattempted',],
         datasets: [
           {
             data: [50, 29, 15],
@@ -73,11 +73,11 @@ export class PerformancePage implements OnInit, AfterViewInit {
         this.testData = res.data.testInfo;
 
         this.performanceChart.data.datasets[0].data = [
-          res.data.testPerformance.correct,
-          res.data.testPerformance.incorrect,
-          res.data.testPerformance.unattempted,
+          this.performanceData.correct,
+          this.performanceData.incorrect,
+          this.performanceData.unattempted,
         ];
-        // this.performanceChart.update();
+        this.performanceChart.update();
       },
       error: (err: any) => {
         if (err.status == 401) {
