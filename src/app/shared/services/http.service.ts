@@ -8,7 +8,7 @@ import { AddToastService } from './add-toast.service';
   providedIn: 'root',
 })
 export class HttpService {
-  url = 'https://localhost:3000/student/';
+  url = 'https://api.cuetcorner.in/student/';
 
   constructor(
     private http: HttpClient,
