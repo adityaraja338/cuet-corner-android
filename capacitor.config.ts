@@ -1,9 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
-import { KeyboardResize, KeyboardStyle } from '@capacitor/keyboard';
+import { KeyboardResize } from '@capacitor/keyboard';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'cuet-corner',
+  appId: 'app.cuetcorner.android',
+  appName: 'Cuet Corner',
   webDir: 'www',
   plugins: {
     Keyboard: {
