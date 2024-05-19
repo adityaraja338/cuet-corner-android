@@ -25,7 +25,7 @@ export class PerformancePage implements OnInit, AfterViewInit {
   testData: any;
 
   constructor(
-    private http: HttpService, 
+    private http: HttpService,
     private route: ActivatedRoute,
     private toast: AddToastService
   ) {}
