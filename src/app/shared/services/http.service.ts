@@ -10,6 +10,8 @@ import { AddToastService } from './add-toast.service';
 export class HttpService {
   url = 'http://localhost:3000/student/';
 
+  // url = 'https://api.cuetcorner.in/student/';
+
   constructor(
     private http: HttpClient,
     private auth: AuthService,
