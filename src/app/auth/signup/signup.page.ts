@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, IonModal, ToastController } from '@ionic/angular';
+import { AuthService } from 'src/app/shared/auth/auth.service';
 import { AddToastService } from 'src/app/shared/services/add-toast.service';
 import { HttpService } from 'src/app/shared/services/http.service';
 
@@ -19,6 +20,7 @@ export class SignupPage implements OnInit {
   currentToken: string = '';
 
   constructor(
+    private auth:AuthService,
     private http: HttpService,
     private fb: FormBuilder,
     private toast: AddToastService,
@@ -67,6 +69,14 @@ export class SignupPage implements OnInit {
 
   ngOnInit() {
     // this.signupForm.reset();
+  }
+
+  async ionViewWillEnter(){
+    const isAuthenticated = await this.auth.isUserLoggedIn();
+    if (isAuthenticated) {
+      // Redirect to the login page if not authenticated
+      this.router.navigate(['/','tabs', 'dashboard']);
+    }
   }
 
   signup() {
