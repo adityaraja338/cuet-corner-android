@@ -27,14 +27,17 @@ export class LoginPage implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.email = "";
+    this.password = "";
+    this.showPassword = false;
+  }
+
+  async ionViewWillEnter(){
     const isAuthenticated = await this.auth.isUserLoggedIn();
     if (isAuthenticated) {
       // Redirect to the login page if not authenticated
       this.router.navigate(['/','tabs', 'dashboard']);
     }
-    this.email = "";
-    this.password = "";
-    this.showPassword = false;
   }
 
   login(){
