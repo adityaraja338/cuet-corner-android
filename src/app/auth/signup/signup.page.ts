@@ -11,7 +11,7 @@ import { HttpService } from 'src/app/shared/services/http.service';
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
 })
-export class SignupPage implements OnInit {
+export class SignupPage {
   @ViewChild('modal') modal!: IonModal;
 
   signupForm: FormGroup;
@@ -65,10 +65,6 @@ export class SignupPage implements OnInit {
       cuetAttempts: [null, []],
       batchId: [null, [Validators.required]],
     });
-  }
-
-  ngOnInit() {
-    // this.signupForm.reset();
   }
 
   async ionViewWillEnter(){
